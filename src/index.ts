@@ -1,12 +1,17 @@
-import {Handler} from 'aws-lambda';
+import {Context, Handler} from 'aws-lambda';
 import {Config} from './Adapter/Config';
-import {Handlers} from './Adapter/input/Handlers';
 
 class Main {
-  constructor(private config: Handlers) {}
-  async coldStart(): Promise<Handler> {
-    return this.config.getHandler();
+  constructor(private config: Config) {}
+  async start() {
+    const internalHandler = await this.config.start();
+    return internalHandler.handler.bind(this);
   }
 }
 
-export const handler = Promise.resolve(new Main(new Config()).coldStart());
+const main = new Main(new Config());
+const starthandler = main.start();
+export const handler: Handler = async (event, context: Context) => {
+  const handler = await starthandler;
+  return handler(event, context, () => {});
+};

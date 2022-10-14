@@ -1,5 +1,5 @@
 import {Demo} from '../../Domain/Demo';
 
-export default interface DemoCrudOutputPort {
+export interface DemoCrudOutputPort {
   getAll(): Promise<Demo[]>;
 }
