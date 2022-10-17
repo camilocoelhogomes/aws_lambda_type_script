@@ -6,6 +6,12 @@
     "emitDeclarationOnly": true,
     "declaration": true,
     "experimentalDecorators": true,
+    "plugins": [
+      {
+        "transform": "ts-auto-mock/transformer",
+        "cacheBetweenTests": false
+      }
+    ]
   },
   "include": [
     "src/**/*.ts",

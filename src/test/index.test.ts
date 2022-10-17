@@ -1,11 +1,14 @@
+/* eslint-disable node/no-unpublished-import */
 import {APIGatewayProxyEvent, Context} from 'aws-lambda';
+import handler from '..';
 import {createMock} from 'ts-auto-mock';
-import {handler} from '..';
 const mockEvent = createMock<APIGatewayProxyEvent>();
 const context = createMock<Context>();
+
 describe('teste do handler', () => {
   test('call event', async () => {
-    const result = await handler(mockEvent, context, () => {});
+    const lambdaHandler = await Promise.resolve(handler);
+    const result = await lambdaHandler(mockEvent, context, () => {});
     console.log(result);
   });
 });

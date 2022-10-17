@@ -1,13 +1,14 @@
 import {APIGatewayProxyEvent, APIGatewayProxyResult, Context} from 'aws-lambda';
 import {inject, injectable} from 'tsyringe';
-import {DemoApp} from '../../Application/DemoApp';
+import DemoAppOrquestratorPort from '../../Application/ports/orquestrators/DemoAppOrquestratorPort';
 import {DITokens} from '../../Domain/DITokens';
 import {LambdaInterface} from '../interfaces/LambdaInterface';
 
 @injectable()
 export class ApiGatewayAdapter implements LambdaInterface {
   constructor(
-    @inject(DITokens.DEMO_APP_INPUT_PORT) private useCases: DemoApp
+    @inject(DITokens.DEMO_APP_ORQUESTRATOR_PORT)
+    private useCases: DemoAppOrquestratorPort
   ) {}
 
   async handler(
