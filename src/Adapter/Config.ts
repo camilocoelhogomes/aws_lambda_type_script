@@ -4,13 +4,13 @@ import {DemoAppOrquestrator} from '../Application/orquestrators/DemoAppOrquestra
 import {DITokens} from '../Domain/DITokens';
 import {ApiGatewayAdapter} from './input/ApiGatewayAdapter';
 import {InputPort} from './inputPort/InputPort';
-import {DemoCrudAdapter} from './output/DemoCrudAdapter';
+import {DemoCrudAdapter2} from './output/DemoCrudAdapter2';
 
 export class Config {
   constructor() {}
   async start(): Promise<InputPort> {
     container.register(DITokens.DEMO_CRUD_OUTPUT_PORT, {
-      useClass: DemoCrudAdapter,
+      useClass: DemoCrudAdapter2,
     });
     container.register(DITokens.DEMO_APP_ORQUESTRATOR_PORT, {
       useClass: DemoAppOrquestrator,
