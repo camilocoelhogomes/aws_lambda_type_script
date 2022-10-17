@@ -3,8 +3,8 @@ import 'reflect-metadata';
 class Main {
   constructor(private config: Config) {}
   async start() {
-    const internalHandler = await this.config.start();
-    return internalHandler.handler.bind(internalHandler);
+    const internalInput = await this.config.start();
+    return internalInput.input.bind(internalInput);
   }
 }
 

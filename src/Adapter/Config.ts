@@ -3,12 +3,12 @@ import {DemoFactorie} from '../Application/factories/DemoFactorie';
 import {DemoAppOrquestrator} from '../Application/orquestrators/DemoAppOrquestrator';
 import {DITokens} from '../Domain/DITokens';
 import {ApiGatewayAdapter} from './input/ApiGatewayAdapter';
-import {LambdaInterface} from './interfaces/LambdaInterface';
+import {InputPort} from './inputPort/InputPort';
 import {DemoCrudAdapter} from './output/DemoCrudAdapter';
 
 export class Config {
   constructor() {}
-  async start(): Promise<LambdaInterface> {
+  async start(): Promise<InputPort> {
     container.register(DITokens.DEMO_CRUD_OUTPUT_PORT, {
       useClass: DemoCrudAdapter,
     });
