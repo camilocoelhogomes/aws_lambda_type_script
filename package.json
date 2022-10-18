@@ -1,5 +1,5 @@
 {
-  "name": "aws_lambda_type_script",
+  "name": "lambda_generator",
   "version": "1.0.0",
   "description": "A scaffolding to generate lambda typeScript Projects",
   "main": "./build/index.js",
@@ -14,6 +14,9 @@
     "pretest": "npm run compile",
     "posttest": "npm run lint"
   },
+  "keywords": [
+    "yeoman-generator"
+  ],
   "author": "",
   "license": "ISC",
   "devDependencies": {
@@ -34,6 +37,7 @@
   "dependencies": {
     "aws-lambda": "^1.0.7",
     "reflect-metadata": "^0.1.13",
-    "tsyringe": "^4.7.0"
+    "tsyringe": "^4.7.0",
+    "yeoman-generator": "^5.7.0"
   }
 }

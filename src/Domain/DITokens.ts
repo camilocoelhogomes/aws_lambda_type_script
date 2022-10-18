@@ -1,5 +1,6 @@
 export enum DITokens {
-  DEMO_APP_ORQUESTRATOR_PORT = 'demoAppOrquestratorPort',
-  DEMO_CRUD_OUTPUT_PORT = 'demoCrudOutuputPort',
-  DEMO_FACTORIE_OUTUPUT_PORT = 'demoFactorieOutputPort',
+  UNREGISTRED_TASK_FACTORIE = 'unregistredTaskFactoriePort',
+  RANDOM_PORT = 'randomPort',
+  TASK_REPOSITORIE = 'taskRepositoriePort',
+  TASK_FACTORIE = 'taskFactorie',
 }

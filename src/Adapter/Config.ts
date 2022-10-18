@@ -1,22 +1,18 @@
 import {container} from 'tsyringe';
-import {DemoFactorie} from '../Application/factories/DemoFactorie';
-import {DemoAppOrquestrator} from '../Application/orquestrators/DemoAppOrquestrator';
+import {UnregistredTaskFactorieAdater} from '../Application/factories/UnregistredTaskFactorieAdater';
 import {DITokens} from '../Domain/DITokens';
 import {ApiGatewayAdapter} from './input/ApiGatewayAdapter';
 import {InputPort} from './inputPort/InputPort';
-import {DemoCrudAdapter2} from './output/DemoCrudAdapter2';
+import {RandomAdapter} from './output/RamdomAdapter';
 
 export class Config {
   constructor() {}
   async start(): Promise<InputPort> {
-    container.register(DITokens.DEMO_CRUD_OUTPUT_PORT, {
-      useClass: DemoCrudAdapter2,
+    container.register(DITokens.UNREGISTRED_TASK_FACTORIE, {
+      useClass: UnregistredTaskFactorieAdater,
     });
-    container.register(DITokens.DEMO_APP_ORQUESTRATOR_PORT, {
-      useClass: DemoAppOrquestrator,
-    });
-    container.register(DITokens.DEMO_FACTORIE_OUTUPUT_PORT, {
-      useClass: DemoFactorie,
+    container.register(DITokens.RANDOM_PORT, {
+      useClass: RandomAdapter,
     });
     return container.resolve(ApiGatewayAdapter);
   }
