@@ -18,10 +18,10 @@ export class TaskEntity {
   responsable: string;
 
   @Attribute()
-  dueDate: Date;
+  dueDate: string;
 
   @Attribute()
-  registredDay: Date;
+  registredDay: string;
 
   @Attribute()
   done: boolean;

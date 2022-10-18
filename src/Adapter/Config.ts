@@ -9,6 +9,7 @@ import {ApiGatewayAdapter} from './input/ApiGatewayAdapter';
 import {InputPort} from './inputPort/InputPort';
 import {RandomAdapter} from './output/RamdomAdapter';
 import {createConnection, getEntityManager} from '@typedorm/core';
+import {TaskEntity} from './output/TaskRepositorie/entity/TaskEntity';
 
 export class Config {
   constructor() {}
@@ -21,7 +22,7 @@ export class Config {
     const documentClient = new DocumentClientV3(new DynamoDBClient({}));
     createConnection({
       table: taskTable,
-      entities: [],
+      entities: [TaskEntity],
       documentClient,
     });
     const entityManager = getEntityManager();

@@ -4,4 +4,5 @@ export enum DITokens {
   TASK_REPOSITORIE = 'taskRepositoriePort',
   TASK_FACTORIE = 'taskFactorie',
   ENTITY_MANAGER = 'entityManager',
+  TASK_ORQUESTRATOR = 'taskOrquestrator',
 }

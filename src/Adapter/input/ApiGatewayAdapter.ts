@@ -1,10 +1,15 @@
 import {APIGatewayProxyEvent, APIGatewayProxyResult, Context} from 'aws-lambda';
-import {injectable} from 'tsyringe';
+import {inject, injectable} from 'tsyringe';
+import TaskAppOrquestrator from '../../Application/ports/orquestrators/DemoAppOrquestratorPort';
+import {DITokens} from '../../Domain/DITokens';
 import {InputPort} from '../inputPort/InputPort';
 
 @injectable()
 export class ApiGatewayAdapter implements InputPort {
-  constructor() {}
+  constructor(
+    @inject(DITokens.TASK_ORQUESTRATOR)
+    private readonly taskOrquestrator: TaskAppOrquestrator
+  ) {}
 
   async input(
     event: APIGatewayProxyEvent,
