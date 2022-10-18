@@ -14,8 +14,18 @@ export class TaskRepositorieAdapter implements TaskRepositoriePort {
     @inject(DITokens.TASK_FACTORIE)
     private readonly taskFactorie: TaskFactoriePort
   ) {}
-  getByPeriod(start: Date, end: Date): Promise<Task[]> {
-    throw new Error('Method not implemented.');
+
+  async getByPeriod(start: Date, end: Date): Promise<Task[]> {
+    const result = await this.entityManager.find(
+      TaskEntity,
+      {},
+      {
+        where: {
+          dueDate: {BETWEEN: [start.toISOString(), end.toISOString()]},
+        },
+      }
+    );
+    return result.items.map(item => this.taskFromEntity(item));
   }
 
   async create(task: Task): Promise<Task> {
@@ -24,11 +34,31 @@ export class TaskRepositorieAdapter implements TaskRepositoriePort {
     return this.taskFromEntity(result);
   }
 
-  update(task: Task): Promise<Task> {
-    throw new Error('Method not implemented.');
+  async update(task: Task): Promise<Task> {
+    const taskEntity = this.taskEntityFactorie(task);
+    const result = await this.entityManager.update(
+      TaskEntity,
+      {
+        id: taskEntity.id,
+        dueDate: taskEntity.dueDate,
+      },
+      taskEntity
+    );
+    if (!result) {
+      throw Error('entity not found');
+    }
+    return this.taskFromEntity(result);
   }
-  delete(task: Task): Promise<void> {
-    throw new Error('Method not implemented.');
+
+  async delete(task: Task): Promise<void> {
+    const taskEntity = this.taskEntityFactorie(task);
+    const result = await this.entityManager.delete(TaskEntity, {
+      id: taskEntity.id,
+      dueDate: taskEntity.dueDate,
+    });
+    if (!result) {
+      throw Error('cant delete');
+    }
   }
 
   private taskEntityFactorie(task: Task): TaskEntity {
