@@ -6,6 +6,7 @@
     "emitDeclarationOnly": true,
     "declaration": true,
     "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
     "plugins": [
       {
         "transform": "ts-auto-mock/transformer",
