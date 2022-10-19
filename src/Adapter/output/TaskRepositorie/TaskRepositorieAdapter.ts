@@ -1,6 +1,6 @@
 import {EntityManager} from '@typedorm/core';
 import {inject, injectable} from 'tsyringe';
-import {TaskFactoriePort} from '../../../Application/ports/factories/TaskFactoriePort';
+import type {TaskFactoriePort} from '../../../Application/ports/factories/TaskFactoriePort';
 import {TaskRepositoriePort} from '../../../Application/ports/output/TaskRepositoryPort';
 import {DITokens} from '../../../Domain/DITokens';
 import {Task} from '../../../Domain/Task';

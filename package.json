@@ -3,7 +3,9 @@
   "version": "1.0.0",
   "description": "A scaffolding to generate lambda typeScript Projects",
   "main": "./build/index.js",
+  "module": "es2022",
   "scripts": {
+    "debug": "node trigger.js",
     "build": "rimraf ./build && node esbuild.config.js",
     "test": "jest",
     "lint": "gts lint",
@@ -40,6 +42,7 @@
     "@typedorm/common": "^1.15.0",
     "@typedorm/core": "^1.15.0",
     "aws-lambda": "^1.0.7",
+    "esbuild-plugin-typescript-decorators": "^0.0.9",
     "reflect-metadata": "^0.1.13",
     "tsyringe": "^4.7.0",
     "yeoman-generator": "^5.7.0"

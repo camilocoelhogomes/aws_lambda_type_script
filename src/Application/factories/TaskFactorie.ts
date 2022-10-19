@@ -3,7 +3,7 @@ import {DITokens} from '../../Domain/DITokens';
 import {Task} from '../../Domain/Task';
 import {UnregistredTask} from '../../Domain/UnregistredTask';
 import {TaskFactoriePort} from '../ports/factories/TaskFactoriePort';
-import {RandomPort} from '../ports/output/RandomPort';
+import type {RandomPort} from '../ports/output/RandomPort';
 
 @injectable()
 export class TaskFactorie implements TaskFactoriePort {

@@ -10,6 +10,9 @@ import {InputPort} from './inputPort/InputPort';
 import {RandomAdapter} from './output/RamdomAdapter';
 import {createConnection, getEntityManager} from '@typedorm/core';
 import {TaskEntity} from './output/TaskRepositorie/entity/TaskEntity';
+import {TaskOrquestratorAdapter} from '../Application/orquestrators/TaskOrquestratorAdapter';
+import {TaskFactorie} from '../Application/factories/TaskFactorie';
+import {TaskRepositorieAdapter} from './output/TaskRepositorie/TaskRepositorieAdapter';
 
 export class Config {
   constructor() {}
@@ -30,8 +33,17 @@ export class Config {
     container.register(DITokens.UNREGISTRED_TASK_FACTORIE, {
       useClass: UnregistredTaskFactorieAdater,
     });
+    container.register(DITokens.TASK_FACTORIE, {
+      useClass: TaskFactorie,
+    });
     container.register(DITokens.RANDOM_PORT, {
       useClass: RandomAdapter,
+    });
+    container.register(DITokens.TASK_ORQUESTRATOR, {
+      useClass: TaskOrquestratorAdapter,
+    });
+    container.register(DITokens.TASK_REPOSITORIE, {
+      useClass: TaskRepositorieAdapter,
     });
     return container.resolve(ApiGatewayAdapter);
   }

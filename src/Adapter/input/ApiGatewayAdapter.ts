@@ -1,6 +1,6 @@
 import {APIGatewayProxyEvent, APIGatewayProxyResult, Context} from 'aws-lambda';
 import {inject, injectable} from 'tsyringe';
-import TaskAppOrquestrator from '../../Application/ports/orquestrators/DemoAppOrquestratorPort';
+import type TaskAppOrquestrator from '../../Application/ports/orquestrators/DemoAppOrquestratorPort';
 import {DITokens} from '../../Domain/DITokens';
 import {InputPort} from '../inputPort/InputPort';
 
@@ -15,6 +15,7 @@ export class ApiGatewayAdapter implements InputPort {
     event: APIGatewayProxyEvent,
     context: Context
   ): Promise<APIGatewayProxyResult> {
+    console.log('eu estive aqui');
     return {
       statusCode: 200,
       body: '',

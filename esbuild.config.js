@@ -1,7 +1,5 @@
 const esbuild = require('esbuild');
-
-// Automatically exclude all node_modules from the bundled version
-const {nodeExternalsPlugin} = require('esbuild-node-externals');
+const EsBuildDecorators = require('esbuild-plugin-typescript-decorators')
 
 esbuild
   .build({
@@ -10,8 +8,12 @@ esbuild
     bundle: true,
     minify: true,
     platform: 'node',
-    sourcemap: true,
-    target: 'node16',
-    plugins: [nodeExternalsPlugin()],
+    sourcemap: 'linked',
+    target: 'es2022',
+    keepNames: true,
+    tsconfig: 'tsconfig.json',
+    plugins: [
+      EsBuildDecorators.esbuildDecorators()
+    ]
   })
   .catch(() => process.exit(1));

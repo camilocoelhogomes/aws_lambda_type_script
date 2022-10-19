@@ -2,9 +2,9 @@ import {inject, injectable} from 'tsyringe';
 import {DITokens} from '../../Domain/DITokens';
 import {Task} from '../../Domain/Task';
 import {UnregistredTask} from '../../Domain/UnregistredTask';
-import {TaskFactoriePort} from '../ports/factories/TaskFactoriePort';
+import type {TaskFactoriePort} from '../ports/factories/TaskFactoriePort';
 import TaskAppOrquestrator from '../ports/orquestrators/DemoAppOrquestratorPort';
-import {TaskRepositoriePort} from '../ports/output/TaskRepositoryPort';
+import type {TaskRepositoriePort} from '../ports/output/TaskRepositoryPort';
 
 @injectable()
 export class TaskOrquestratorAdapter implements TaskAppOrquestrator {
