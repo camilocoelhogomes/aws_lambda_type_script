@@ -18,6 +18,7 @@
     "strictPropertyInitialization": false,
     "declaration": true,
     "isolatedModules": true,
+    "preserveConstEnums": true,
     "plugins": [
       {
         "transform": "ts-auto-mock/transformer",
