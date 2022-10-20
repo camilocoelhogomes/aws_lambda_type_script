@@ -7,6 +7,7 @@
   "scripts": {
     "debug": "node trigger.js",
     "build": "rimraf ./build && node esbuild.config.js",
+    "build:tsc":"rimraf ./build && npx tsc",
     "test": "jest",
     "lint": "gts lint",
     "clean": "gts clean",

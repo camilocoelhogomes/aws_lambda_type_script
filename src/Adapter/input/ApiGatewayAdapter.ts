@@ -15,10 +15,13 @@ export class ApiGatewayAdapter implements InputPort {
     event: APIGatewayProxyEvent,
     context: Context
   ): Promise<APIGatewayProxyResult> {
-    console.log('eu estive aqui');
+    const now = new Date();
+    const now7 = new Date(now);
+    now7.setDate(now.getDate() + 7);
+    const result = await this.taskOrquestrator.getAllByPeriod(now, now7);
     return {
       statusCode: 200,
-      body: '',
+      body: JSON.stringify(result),
     };
   }
 }
