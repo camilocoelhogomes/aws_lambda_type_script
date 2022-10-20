@@ -2,12 +2,12 @@ import {Attribute, Entity} from '@typedorm/common';
 
 @Entity({
   name: 'task',
-  primaryKey: {partitionKey: '{{id}}', sortKey: '{{dueDate}}'},
+  primaryKey: {
+    partitionKey: 'name#{{name}}',
+    sortKey: 'registredDay#{{registredDay}}',
+  },
 })
 export class TaskEntity {
-  @Attribute()
-  id: string;
-
   @Attribute()
   name: string;
 

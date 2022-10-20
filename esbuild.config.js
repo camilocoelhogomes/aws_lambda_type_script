@@ -9,7 +9,9 @@ esbuild
     minify: true,
     platform: 'node',
     sourcemap: 'linked',
-    target: 'es2022',
+    metafile: true,
+    target: 'es2021',
+    legalComments:'none',
     keepNames: true,
     tsconfig: 'tsconfig.json',
     plugins: [

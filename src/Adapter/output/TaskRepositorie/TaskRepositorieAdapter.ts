@@ -1,4 +1,9 @@
-import {EntityManager} from '@typedorm/core';
+import {
+  EntityManager,
+  getEntityManager,
+  getScanManager,
+  ScanManager,
+} from '@typedorm/core';
 import {inject, injectable} from 'tsyringe';
 import type {TaskFactoriePort} from '../../../Application/ports/factories/TaskFactoriePort';
 import {TaskRepositoriePort} from '../../../Application/ports/output/TaskRepositoryPort';
@@ -8,23 +13,23 @@ import {TaskEntity} from './entity/TaskEntity';
 
 @injectable()
 export class TaskRepositorieAdapter implements TaskRepositoriePort {
+  private readonly entityManager: EntityManager;
+  private readonly scamManager: ScanManager;
   constructor(
-    @inject(DITokens.ENTITY_MANAGER)
-    private readonly entityManager: EntityManager,
     @inject(DITokens.TASK_FACTORIE)
     private readonly taskFactorie: TaskFactoriePort
-  ) {}
+  ) {
+    this.entityManager = getEntityManager();
+    this.scamManager = getScanManager();
+  }
 
   async getByPeriod(start: Date, end: Date): Promise<Task[]> {
-    const result = await this.entityManager.find(
-      TaskEntity,
-      {},
-      {
-        where: {
-          dueDate: {BETWEEN: [start.toISOString(), end.toISOString()]},
-        },
-      }
-    );
+    const result = await this.scamManager.find(TaskEntity, {
+      where: {dueDate: {BETWEEN: [start.toISOString(), end.toISOString()]}},
+    });
+    if (!result.items) {
+      return [];
+    }
     return result.items.map(item => this.taskFromEntity(item));
   }
 
@@ -38,10 +43,7 @@ export class TaskRepositorieAdapter implements TaskRepositoriePort {
     const taskEntity = this.taskEntityFactorie(task);
     const result = await this.entityManager.update(
       TaskEntity,
-      {
-        id: taskEntity.id,
-        dueDate: taskEntity.dueDate,
-      },
+      taskEntity,
       taskEntity
     );
     if (!result) {
@@ -52,10 +54,7 @@ export class TaskRepositorieAdapter implements TaskRepositoriePort {
 
   async delete(task: Task): Promise<void> {
     const taskEntity = this.taskEntityFactorie(task);
-    const result = await this.entityManager.delete(TaskEntity, {
-      id: taskEntity.id,
-      dueDate: taskEntity.dueDate,
-    });
+    const result = await this.entityManager.delete(TaskEntity, taskEntity);
     if (!result) {
       throw Error('cant delete');
     }
@@ -63,7 +62,6 @@ export class TaskRepositorieAdapter implements TaskRepositoriePort {
 
   private taskEntityFactorie(task: Task): TaskEntity {
     const taskEntity = new TaskEntity();
-    taskEntity.id = task.id;
     taskEntity.description = task.description;
     taskEntity.done = task.done;
     taskEntity.dueDate = task.dueDate.toISOString();
@@ -75,7 +73,7 @@ export class TaskRepositorieAdapter implements TaskRepositoriePort {
 
   private taskFromEntity(taskEntity: TaskEntity): Task {
     return this.taskFactorie.fromRaw(
-      taskEntity.id,
+      `name#${taskEntity.name}registredDay${taskEntity.registredDay}`,
       taskEntity.name,
       taskEntity.description,
       taskEntity.responsable,

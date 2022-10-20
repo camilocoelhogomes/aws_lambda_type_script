@@ -8,7 +8,7 @@ import {DITokens} from '../Domain/DITokens';
 import {ApiGatewayAdapter} from './input/ApiGatewayAdapter';
 import {InputPort} from './inputPort/InputPort';
 import {RandomAdapter} from './output/RamdomAdapter';
-import {createConnection, getEntityManager} from '@typedorm/core';
+import {createConnection} from '@typedorm/core';
 import {TaskEntity} from './output/TaskRepositorie/entity/TaskEntity';
 import {TaskOrquestratorAdapter} from '../Application/orquestrators/TaskOrquestratorAdapter';
 import {TaskFactorie} from '../Application/factories/TaskFactorie';
@@ -28,8 +28,6 @@ export class Config {
       entities: [TaskEntity],
       documentClient,
     });
-    const entityManager = getEntityManager();
-    container.register(DITokens.ENTITY_MANAGER, {useValue: entityManager});
     container.register(DITokens.UNREGISTRED_TASK_FACTORIE, {
       useClass: UnregistredTaskFactorieAdater,
     });
