@@ -25,7 +25,12 @@ export class TaskRepositorieAdapter implements TaskRepositoriePort {
 
   async getByPeriod(start: Date, end: Date): Promise<Task[]> {
     const result = await this.scamManager.find(TaskEntity, {
-      where: {dueDate: {BETWEEN: [start.toISOString(), end.toISOString()]}},
+      where: {
+        OR: {
+          dueDate: {BETWEEN: [start.toISOString(), end.toISOString()]},
+          done: {CONTAINS: false},
+        },
+      },
     });
     if (!result.items) {
       return [];
@@ -62,6 +67,7 @@ export class TaskRepositorieAdapter implements TaskRepositoriePort {
 
   private taskEntityFactorie(task: Task): TaskEntity {
     const taskEntity = new TaskEntity();
+    taskEntity.id = task.id;
     taskEntity.description = task.description;
     taskEntity.done = task.done;
     taskEntity.dueDate = task.dueDate.toISOString();
@@ -73,7 +79,8 @@ export class TaskRepositorieAdapter implements TaskRepositoriePort {
 
   private taskFromEntity(taskEntity: TaskEntity): Task {
     return this.taskFactorie.fromRaw(
-      `name#${taskEntity.name}registredDay${taskEntity.registredDay}`,
+      taskEntity.id ??
+        `${taskEntity.name}${taskEntity.responsable}${taskEntity.registredDay}`,
       taskEntity.name,
       taskEntity.description,
       taskEntity.responsable,

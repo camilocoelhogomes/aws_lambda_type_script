@@ -3,6 +3,7 @@ const EsBuildDecorators = require('esbuild-plugin-typescript-decorators')
 
 esbuild
   .build({
+    external: ['pg-native'],
     entryPoints: ['./src/index.ts'],
     outfile: 'build/index.js',
     bundle: true,

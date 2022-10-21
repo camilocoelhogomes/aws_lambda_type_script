@@ -3,11 +3,14 @@ import {Attribute, Entity} from '@typedorm/common';
 @Entity({
   name: 'task',
   primaryKey: {
-    partitionKey: 'name#{{name}}',
+    partitionKey: 'name#{{id}}',
     sortKey: 'registredDay#{{registredDay}}',
   },
 })
 export class TaskEntity {
+  @Attribute()
+  id: string;
+
   @Attribute()
   name: string;
 
