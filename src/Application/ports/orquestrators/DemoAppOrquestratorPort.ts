@@ -6,5 +6,4 @@ export default interface TaskAppOrquestrator {
   register(unregistredTask: UnregistredTask): Promise<Task>;
   editTask(task: Task): Promise<Task>;
   delete(task: Task): Promise<void>;
-  toggleTask(task: Task): Promise<Task>;
 }

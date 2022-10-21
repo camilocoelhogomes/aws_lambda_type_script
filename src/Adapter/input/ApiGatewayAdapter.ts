@@ -1,5 +1,6 @@
 import {APIGatewayProxyEvent, APIGatewayProxyResult, Context} from 'aws-lambda';
 import {inject, injectable} from 'tsyringe';
+import {TaskFactoriePort} from '../../Application/ports/factories/TaskFactoriePort';
 import {UnregistredTaskFactoriePort} from '../../Application/ports/factories/UnregistredTaskFactoriePort';
 import type TaskAppOrquestrator from '../../Application/ports/orquestrators/DemoAppOrquestratorPort';
 import {DITokens} from '../../Domain/DITokens';
@@ -17,6 +18,8 @@ export class ApiGatewayAdapter implements InputPort {
     '/task': {
       GET: this.taskGet.bind(this),
       POST: this.taskPost.bind(this),
+      DELETE: this.taskDelete.bind(this),
+      PUT: this.taskPut.bind(this),
     },
   };
 
@@ -24,7 +27,9 @@ export class ApiGatewayAdapter implements InputPort {
     @inject(DITokens.TASK_ORQUESTRATOR)
     private readonly taskOrquestrator: TaskAppOrquestrator,
     @inject(DITokens.UNREGISTRED_TASK_FACTORIE)
-    private readonly unregistredTaskFactorie: UnregistredTaskFactoriePort
+    private readonly unregistredTaskFactorie: UnregistredTaskFactoriePort,
+    @inject(DITokens.TASK_FACTORIE)
+    private readonly taskFactorie: TaskFactoriePort
   ) {}
 
   async input(
@@ -64,6 +69,54 @@ export class ApiGatewayAdapter implements InputPort {
     return {
       statusCode: 201,
       body: JSON.stringify(result),
+    };
+  }
+
+  private async taskDelete(
+    event: APIGatewayProxyEvent
+  ): Promise<APIGatewayProxyResult> {
+    if (!event.body) {
+      throw new Error('sem corpo');
+    }
+    const {id, name, description, responsable, dueDate, registredDay, done} =
+      JSON.parse(event.body);
+    const task = this.taskFactorie.fromRaw(
+      id,
+      name,
+      description,
+      responsable,
+      dueDate,
+      registredDay,
+      done
+    );
+    await this.taskOrquestrator.delete(task);
+    return {
+      statusCode: 201,
+      body: '',
+    };
+  }
+
+  private async taskPut(
+    event: APIGatewayProxyEvent
+  ): Promise<APIGatewayProxyResult> {
+    if (!event.body) {
+      throw new Error('sem corpo');
+    }
+    const {id, name, description, responsable, dueDate, registredDay, done} =
+      JSON.parse(event.body);
+    const task = this.taskFactorie.fromRaw(
+      id,
+      name,
+      description,
+      responsable,
+      dueDate,
+      registredDay,
+      done
+    );
+    await this.taskOrquestrator.editTask(task);
+    return {
+      statusCode: 201,
+      body: '',
     };
   }
 }

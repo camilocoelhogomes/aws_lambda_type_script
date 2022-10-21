@@ -27,9 +27,4 @@ export class TaskOrquestratorAdapter implements TaskAppOrquestrator {
   delete(task: Task): Promise<void> {
     return this.taskRepositorie.delete(task);
   }
-  toggleTask(task: Task): Promise<Task> {
-    const updatedTask = {...task};
-    updatedTask.done = !task.done;
-    return this.taskRepositorie.update(updatedTask);
-  }
 }
