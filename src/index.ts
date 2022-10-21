@@ -1,6 +1,5 @@
 import {Config} from './Adapter/Config';
 import {Context, APIGatewayProxyResult, APIGatewayEvent} from 'aws-lambda';
-
 import 'reflect-metadata';
 class Main {
   constructor(private config: Config) {}

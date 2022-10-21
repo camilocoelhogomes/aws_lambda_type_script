@@ -7,7 +7,7 @@ esbuild
     entryPoints: ['./src/index.ts'],
     outfile: 'build/index.js',
     bundle: true,
-    minify: true,
+    minify: false,
     platform: 'node',
     sourcemap: 'linked',
     metafile: true,

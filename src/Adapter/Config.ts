@@ -28,20 +28,20 @@ export class Config {
       entities: [TaskEntity],
       documentClient,
     });
+    container.register(DITokens.RANDOM_PORT, {
+      useClass: RandomAdapter,
+    });
     container.register(DITokens.UNREGISTRED_TASK_FACTORIE, {
       useClass: UnregistredTaskFactorieAdater,
     });
     container.register(DITokens.TASK_FACTORIE, {
       useClass: TaskFactorie,
     });
-    container.register(DITokens.RANDOM_PORT, {
-      useClass: RandomAdapter,
+    container.register(DITokens.TASK_REPOSITORIE, {
+      useClass: TaskRepositorieAdapter,
     });
     container.register(DITokens.TASK_ORQUESTRATOR, {
       useClass: TaskOrquestratorAdapter,
-    });
-    container.register(DITokens.TASK_REPOSITORIE, {
-      useClass: TaskRepositorieAdapter,
     });
     return container.resolve(ApiGatewayAdapter);
   }
