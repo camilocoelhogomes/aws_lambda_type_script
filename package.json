@@ -5,7 +5,7 @@
   "main": "./build/index.js",
   "module": "commonjs",
   "scripts": {
-    "debug": "npx nodemon ./trigger.ts localhost 8080",
+    "debug": "npx nodemon ./debugServer.ts localhost 8080",
     "build:esbuild": "rimraf ./build && node esbuild.config.js",
     "build:tsc": "rimraf ./build && npx tsc",
     "build:webpack": "rimraf ./build && npx webpack",
