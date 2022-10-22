@@ -1,5 +1,5 @@
 /* eslint-disable node/no-unpublished-import */
-const lambdaHandler = require('./build/index.js');
+const lambdaHandler = require('./bundle/index.js');
 const fastify =require('fastify');
 
 const server = fastify();

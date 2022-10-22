@@ -115,7 +115,10 @@ server.post('/', async (request: any, reply: any) => {
   event.resource = request.body!['resource']!;
   event.httpMethod = request.body!['httpMethod']!;
   event.body = request.body['body'] ?? null;
-  const result = await lambdaHandler(event, context);
+  const result = await lambdaHandler(
+    {...event, body: JSON.stringify(event.body)},
+    context
+  );
   return {...result, body: JSON.parse(result.body)};
 });
 

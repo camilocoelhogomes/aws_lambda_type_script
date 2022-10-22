@@ -16,7 +16,6 @@
     "strict": true,
     "skipLibCheck": true,
     "strictPropertyInitialization": false,
-    "isolatedModules": true,
     "plugins": [
       {
         "transform": "ts-auto-mock/transformer",
@@ -24,5 +23,5 @@
       }
     ]
   },
-  "exclude": ["node_modules", "**/*.test.ts","src/test","jest.config.ts"]
+  "exclude": ["node_modules", "**/*.test.ts","src/test","jest.config.ts","debugServer.ts","esbuild.config.js"]
 }
