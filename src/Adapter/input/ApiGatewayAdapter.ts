@@ -58,12 +58,13 @@ export class ApiGatewayAdapter implements InputPort {
     if (!event.body) {
       throw new Error('sem corpo');
     }
-    const {name, description, responsable, dueDate} = JSON.parse(event.body);
+    const body = JSON.parse(event.body);
+
     const unregistredTask = this.unregistredTaskFactorie.fromRaw(
-      name,
-      description,
-      responsable,
-      dueDate
+      body['name'],
+      body['description'],
+      body['responsable'],
+      body['dueDate']
     );
     const result = await this.taskOrquestrator.register(unregistredTask);
     return {
@@ -78,21 +79,11 @@ export class ApiGatewayAdapter implements InputPort {
     if (!event.body) {
       throw new Error('sem corpo');
     }
-    const {id, name, description, responsable, dueDate, registredDay, done} =
-      JSON.parse(event.body);
-    const task = this.taskFactorie.fromRaw(
-      id,
-      name,
-      description,
-      responsable,
-      dueDate,
-      registredDay,
-      done
-    );
+    const task = this.taskFactorie.fromRaw(JSON.parse(event.body));
     await this.taskOrquestrator.delete(task);
     return {
       statusCode: 201,
-      body: '',
+      body: JSON.stringify({}),
     };
   }
 
@@ -102,21 +93,12 @@ export class ApiGatewayAdapter implements InputPort {
     if (!event.body) {
       throw new Error('sem corpo');
     }
-    const {id, name, description, responsable, dueDate, registredDay, done} =
-      JSON.parse(event.body);
-    const task = this.taskFactorie.fromRaw(
-      id,
-      name,
-      description,
-      responsable,
-      dueDate,
-      registredDay,
-      done
-    );
-    await this.taskOrquestrator.editTask(task);
+
+    const task = this.taskFactorie.fromRaw(JSON.parse(event.body));
+    const result = await this.taskOrquestrator.editTask(task);
     return {
       statusCode: 201,
-      body: '',
+      body: JSON.stringify(result),
     };
   }
 }

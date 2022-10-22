@@ -21,23 +21,23 @@ export class TaskFactorie implements TaskFactoriePort {
       false
     );
   }
-  fromRaw(
-    id: string,
-    name: string,
-    description: string,
-    responsable: string,
-    dueDate: string,
-    registredDay: string,
-    done: boolean
-  ): Task {
+  fromRaw(raw: {
+    id: string;
+    name: string;
+    description: string;
+    responsable: string;
+    dueDate: string;
+    registredDay: string;
+    done: boolean;
+  }): Task {
     return new Task(
-      id,
-      name,
-      description,
-      responsable,
-      new Date(dueDate),
-      new Date(registredDay),
-      done
+      raw.id,
+      raw.name,
+      raw.description,
+      raw.responsable,
+      new Date(raw.dueDate),
+      new Date(raw.registredDay),
+      raw.done
     );
   }
 }

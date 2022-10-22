@@ -48,8 +48,8 @@ export class TaskRepositorieAdapter implements TaskRepositoriePort {
     const taskEntity = this.taskEntityFactorie(task);
     const result = await this.entityManager.update(
       TaskEntity,
-      taskEntity,
-      taskEntity
+      {id: taskEntity.id, registredDay: taskEntity.registredDay},
+      {...taskEntity}
     );
     if (!result) {
       throw Error('entity not found');
@@ -78,15 +78,16 @@ export class TaskRepositorieAdapter implements TaskRepositoriePort {
   }
 
   private taskFromEntity(taskEntity: TaskEntity): Task {
-    return this.taskFactorie.fromRaw(
-      taskEntity.id ??
+    return this.taskFactorie.fromRaw({
+      id:
+        taskEntity.id ??
         `${taskEntity.name}${taskEntity.responsable}${taskEntity.registredDay}`,
-      taskEntity.name,
-      taskEntity.description,
-      taskEntity.responsable,
-      taskEntity.dueDate,
-      taskEntity.registredDay,
-      taskEntity.done
-    );
+      name: taskEntity.name,
+      description: taskEntity.description,
+      responsable: taskEntity.responsable,
+      dueDate: taskEntity.dueDate,
+      registredDay: taskEntity.registredDay,
+      done: taskEntity.done,
+    });
   }
 }
