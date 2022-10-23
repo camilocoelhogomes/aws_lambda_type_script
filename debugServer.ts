@@ -119,7 +119,11 @@ server.post('/', async (request: any, reply: any) => {
     {...event, body: JSON.stringify(event.body)},
     context
   );
-  return {...result, body: JSON.parse(result.body)};
+  return {
+    ...result,
+    body: JSON.parse(result.body),
+    statusCode: result.statusCode,
+  };
 });
 
 // Run the server!

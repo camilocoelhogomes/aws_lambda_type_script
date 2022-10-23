@@ -82,7 +82,7 @@ export class ApiGatewayAdapter implements InputPort {
     const task = this.taskFactorie.fromRaw(JSON.parse(event.body));
     await this.taskOrquestrator.delete(task);
     return {
-      statusCode: 201,
+      statusCode: 200,
       body: JSON.stringify({}),
     };
   }
@@ -97,7 +97,7 @@ export class ApiGatewayAdapter implements InputPort {
     const task = this.taskFactorie.fromRaw(JSON.parse(event.body));
     const result = await this.taskOrquestrator.editTask(task);
     return {
-      statusCode: 201,
+      statusCode: 200,
       body: JSON.stringify(result),
     };
   }

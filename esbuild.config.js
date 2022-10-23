@@ -1,10 +1,9 @@
 const esbuild = require('esbuild');
-const EsBuildDecorators = require('esbuild-plugin-typescript-decorators')
 
 esbuild
   .build({
     entryPoints: ['./build/index.js'],
-    outfile: 'bundle/index.js',
+    outfile: 'prod/index.js',
     bundle: true,
     minify: true,
     platform: 'node',

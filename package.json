@@ -6,8 +6,7 @@
   "module": "commonjs",
   "scripts": {
     "debug": "npx nodemon ./debugServer.ts localhost 8080",
-    "build:prod": "rimraf ./bundle && npm run build:tsc && node esbuild.config.js",
-    "build:tsc": "rimraf ./build && npx tsc",
+    "build:prod": "rimraf ./prod && rimraf ./build && npx tsc && node esbuild.config.js && rimraf ./build",
     "test": "jest",
     "lint": "gts lint",
     "clean": "gts clean",
